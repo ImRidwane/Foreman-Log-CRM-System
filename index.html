@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17251f">
+  <meta name="description" content="A personal field logbook for materials used, near misses, and field notes.">
+  <title>Fieldwork — Field Logbook</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Fieldwork logbook home">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span><strong>fieldwork</strong><small>PERSONAL FIELD LOGBOOK</small></span>
+      </a>
+      <div class="top-actions">
+        <button class="button button-outline" id="export-backup" type="button">Export backup</button>
+        <button class="button button-outline" id="import-backup" type="button">Import backup</button>
+        <input id="backup-file" type="file" accept=".json,application/json" hidden>
+        <button class="button button-primary" id="export-csv" type="button">Download CSV</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <p class="eyebrow">YOUR SITE NOTES</p>
+        <h1>Keep the useful details.</h1>
+        <p class="intro-copy">A simple place to record what was used, what nearly happened, and what the next person should know.</p>
+      </section>
+
+      <div class="local-note" role="note"><strong>Private to this browser:</strong> records stay on this device and do not sync. Export backups regularly. Follow your employer’s required process for urgent or formal safety reports.</div>
+
+      <section class="stats" aria-label="Logbook totals">
+        <article class="stat-card"><span>All entries</span><strong id="entry-count">0</strong></article>
+        <article class="stat-card"><span>Materials used</span><strong id="material-count">0</strong></article>
+        <article class="stat-card"><span>Near misses</span><strong id="near-miss-count">0</strong></article>
+      </section>
+
+      <div class="workspace">
+        <form class="panel entry-form" id="entry-form">
+          <div class="panel-heading">
+            <div><p class="eyebrow">ADD TO THE LOG</p><h2>New entry</h2></div>
+          </div>
+          <label class="field">Entry type
+            <select id="entry-type" name="type">
+              <option value="material">Materials used</option>
+              <option value="near-miss">Near miss</option>
+              <option value="field-note">Field note</option>
+            </select>
+          </label>
+          <div class="field-grid">
+            <label class="field">Date<input id="entry-date" name="date" type="date" required></label>
+            <label class="field">Job or site<input name="site" type="text" maxlength="120" placeholder="Optional"></label>
+          </div>
+          <label class="field"><span id="title-label">Item used</span><input id="entry-title" name="title" type="text" maxlength="160" required placeholder="e.g. 2x4 framing lumber"></label>
+          <div id="type-fields"></div>
+          <label class="field"><span id="details-label">Details</span><textarea name="details" rows="4" maxlength="2000" required placeholder="What was used and where?"></textarea></label>
+          <button class="button button-primary submit-button" type="submit">Save entry</button>
+        </form>
+
+        <section class="panel entries-panel" aria-labelledby="entries-heading">
+          <div class="panel-heading">
+            <div><p class="eyebrow">RECENT RECORDS</p><h2 id="entries-heading">Your log</h2></div>
+            <span class="entry-total" id="filtered-count"></span>
+          </div>
+          <div class="filters">
+            <label class="visually-hidden" for="entry-filter">Filter entries</label>
+            <select id="entry-filter">
+              <option value="all">All entry types</option>
+              <option value="material">Materials used</option>
+              <option value="near-miss">Near misses</option>
+              <option value="field-note">Field notes</option>
+            </select>
+            <label class="visually-hidden" for="entry-search">Search entries</label>
+            <input id="entry-search" type="search" placeholder="Search your log">
+          </div>
+          <div id="entries-list" class="entries-list"></div>
+          <p id="empty-state" class="empty-state">Your log is empty. Add your first entry above.</p>
+        </section>
+      </div>
+    </main>
+    <footer>Fieldwork logbook · Stored locally on this device</footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
